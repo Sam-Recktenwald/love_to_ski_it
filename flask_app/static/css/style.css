@@ -1,0 +1,33 @@
+/* STYLING FOR STARS  */
+
+.rating-box .stars {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.stars input {
+    color: #e6e6e6;
+    font-size: 35px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.stars input.active {
+    color: #ff9c1a;
+}
+.stars-2 i {
+    color: #e6e6e6;
+    font-size: 35px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.stars-2 i.active {
+    color: #ff9c1a;
+}
+
+/* MAP STYLING */
+#map {
+    height: 700px;
+}

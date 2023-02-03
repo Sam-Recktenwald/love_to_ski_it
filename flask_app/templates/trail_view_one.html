@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{this_trail.trail_name}} Trail Reviews</title>
+    <!-- Bootstrap CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Images -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cabin">
+    <!-- Responsive meta tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='/img/snow_mountains.jpeg') }}");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: 'Cabin';
+        }
+    </style>
+    <!-- JS SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"
+        defer></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</head>
+
+<body>
+    <div class="container" style="margin-top: 50px;">
+        <!-- NAVBAR AND HEADER -->
+        <div class="d-flex justify-content-between"
+            style="background-color: #C7DBE8; color: #FAF8F9; padding: 20px; opacity: 0.8;">
+            <div class="d-flex">
+                <img src="{{ url_for('static', filename='/img/skiing.png') }}" alt="Mountain Logo" width="65px">
+                <h1 style="padding-left: 10px; padding-top: 7px;">Love to Ski-it</h1>
+            </div>
+            <div class="navbar">
+                <ul style="list-style: none;">
+                    <li>
+                        <a href="/resorts/{{this_trail.resort_id}}/show" class="btn" style="margin-top:5px; background-color: #73CBE9;">Back to Trails</a>
+                        <a href="/" class="btn" style="margin-top:5px; background-color: #73CBE9;">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div style="background-color: #C7DBE8; color: #FAF8F9; padding: 20px; opacity: 0.8;">
+            <h2>Ski Fast - Take Chances - Have Fun!</h2>
+        </div>
+        <!-- BODY -->
+        <!-- FLASH MESSAGES -->
+        <div>
+            {% with messages = get_flashed_messages() %} <!-- declare a variable called messages -->
+                {% if messages %} <!-- check if there are any messages -->
+                    {% for message in messages %} <!-- loop through the messages -->
+                        <p class="alert alert-danger text-center" role="alert">{{message}}</p> <!-- display each message in a paragraph tag -->
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <!-- TRAIL NAME AND LAUNCH MODAL BUTTON -->
+        <div class="d-flex justify-content-around" style="margin-top: 50px;">
+            <h2 style="color: #73CBE9;">{{this_trail.trail_name}}</h2>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#buttonModal"
+                style="background-color: #73CBE9; text-align: center;">
+                +Add Your Review
+            </button>
+        </div>
+        <!-- MODAL-FORM -->
+        <div class="container py-7">
+            <div class="row mt-3">
+                <div class="col-sm-4 col-6 mx-auto">
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="buttonModal" tabindex="-1" aria-labelledby="formModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #C7DBE8;">
+                                    <h5 class="modal-title" id="formModalLabel">Please Share Your Experience:</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" style="background-color: #FAF8F9;">
+                                    <!-- FORM STARTS HERE -->
+                                    <form action="/reviews/create" method="POST">
+                                        <div>
+                                            <label for="reviewInput" class="form-label">Review:</label>
+                                            <textarea name="description" id="reviewInput" class="form-control" cols="30" rows="4"
+                                                placeholder="Share your thoughts about the trail so others know what to expect."></textarea>
+                                        </div>
+                                        <div style="margin-top: 10px;">
+                                            <label for="ratingInput" class="form-label">Rating:</label>
+                                            <div class="rating-box">
+                                                <div class="stars form-control">
+                                                    <input type="radio" name="rating" id="ratingInput" class="form-control fa-solid fa-star" value="1" required>
+                                                    <input type="radio" name="rating" id="ratingInput" class="form-control fa-solid fa-star" value="2" required>
+                                                    <input type="radio" name="rating" id="ratingInput" class="form-control fa-solid fa-star" value="3" required>
+                                                    <input type="radio" name="rating" id="ratingInput" class="form-control fa-solid fa-star" value="4" required>
+                                                    <input type="radio" name="rating" id="ratingInput" class="form-control fa-solid fa-star" value="5" required>
+                                                </div>
+                                            </div>
+                                            </label>
+                                        </div>
+                                        <div style="margin-top: 10px;">
+                                            <label for="dateInput" class="form-label">Date:</label>
+                                            <input type="date" name="date" id="dateInput" class="form-control">
+                                        </div>
+                                        <div style="margin-top: 10px;">
+                                            <label for="nameInput" class="form-label">Name:</label>
+                                            <input type="text" name="name" id="nameInput" class="form-control">
+                                        </div>
+                                        <div>
+                                            <input type="hidden" value="{{this_trail.id}}" name="trail_id">
+                                        </div>
+                                        <button class="btn" style="background-color: #73CBE9; text-align: center; margin-top: 10px;">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENT - REVIEWS -->
+        <div style="background-color: #FAF8F9; opacity: 0.7; padding: 20px; margin-top: 50px;">
+            <div>
+                <h2 class="d-flex">Reviews: </h2>
+                {% for one_review in all_reviews | sort(reverse=true, attribute='date') %}
+                <!-- Could replace date with created_at in the above -->
+                    <div style="padding-left: 10px; padding-right: 10px;">
+                        <hr>
+                        {% if one_review.rating == 1 %}
+                            <div class="stars-2">
+                                <i class="fa-solid fa-star active" value="1"></i>
+                                <i class="fa-solid fa-star" value="2"></i>
+                                <i class="fa-solid fa-star" value="3"></i>
+                                <i class="fa-solid fa-star" value="4"></i>
+                                <i class="fa-solid fa-star" value="5"></i>
+                            </div>
+                        {% elif one_review.rating == 2 %}
+                            <div class="stars-2" >
+                                <i class="fa-solid fa-star active" value="1"></i>
+                                <i class="fa-solid fa-star active" value="2"></i>
+                                <i class="fa-solid fa-star" value="3"></i>
+                                <i class="fa-solid fa-star" value="4"></i>
+                                <i class="fa-solid fa-star" value="5"></i>
+                            </div>
+                        {% elif one_review.rating == 3 %}
+                            <div class="stars-2">
+                                <i class="fa-solid fa-star active" value="1"></i>
+                                <i class="fa-solid fa-star active" value="2"></i>
+                                <i class="fa-solid fa-star active" value="3"></i>
+                                <i class="fa-solid fa-star" value="4"></i>
+                                <i class="fa-solid fa-star" value="5"></i>
+                            </div>
+                        {% elif one_review.rating == 4 %}
+                            <div class="stars-2">
+                                <i class="fa-solid fa-star active" value="1"></i>
+                                <i class="fa-solid fa-star active" value="2"></i>
+                                <i class="fa-solid fa-star active" value="3"></i>
+                                <i class="fa-solid fa-star active" value="4"></i>
+                                <i class="fa-solid fa-star" value="5"></i>
+                            </div>
+                        {% elif one_review.rating == 5 %}
+                            <div class="stars-2">
+                                <i class="fa-solid fa-star active" value="1"></i>
+                                <i class="fa-solid fa-star active" value="2"></i>
+                                <i class="fa-solid fa-star active" value="3"></i>
+                                <i class="fa-solid fa-star active" value="4"></i>
+                                <i class="fa-solid fa-star active" value="5"></i>
+                            </div>
+                        {% endif %}
+                        <p style="margin-top: 10px;">{{one_review.description}}</p>
+                        <p>Posted By: {{one_review.name}} - {{one_review.date.strftime('%m-%d-%Y')}}</p>
+                        <hr>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- FOOTER - Attributions -->
+        <footer style="position:absolute; bottom: 0; right: 0;">
+            <a href="https://www.flaticon.com/free-icons/skiing" title="skiing icons"
+                style="color: #73CBE9; opacity: 0.7">Skiing icons created by Freepik - Flaticon</a>
+        </footer>
+    </div>
+</body>
+
+</html>
