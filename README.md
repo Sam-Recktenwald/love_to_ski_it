@@ -1,6 +1,7 @@
 # Love to Ski-it
 An app that allows users to easily view ski resort trail maps and get user submitted reviews and conditions on those trails. This Python project utilizes Flask for it's fast implementation of features like Jinja2 and flash messages. I also implemented Google Maps API in order to view resort trail maps.
 
+![Love to Ski-it demo gif](https://user-images.githubusercontent.com/103951520/232165623-c69f85ea-a00c-4df3-9b23-6a77f5372033.gif)
 
 
 # Features
